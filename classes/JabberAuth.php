@@ -15,6 +15,7 @@ abstract class JabberAuth {
     $this->stdin = fopen('php://stdin', 'r');
     $this->stdout = fopen('php://stdout', 'w');
     $this->logfile = fopen($this->logpath . 'activity-' . date('Y-m-d') . '.log', 'a');
+    $this->log('Starting...');
     $this->running = TRUE;
   }
 
