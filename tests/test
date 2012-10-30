@@ -1,0 +1,10 @@
+php test.php > test.in
+php ../main.php <test.in>test.out
+if [ -z "$(diff test.out test.successful)" ]
+then
+  echo "Test successful."
+else
+  echo "Test unsuccessful. Check activity logs."
+fi
+
+rm test.in test.out
