@@ -12,9 +12,15 @@ abstract class JabberAuth {
   abstract function removeuser($username, $server);
 
   function init() {
+    global $config;
     $this->stdin = fopen('php://stdin', 'r');
     $this->stdout = fopen('php://stdout', 'w');
-    $this->logfile = fopen($this->logpath . 'activity-' . date('Y-m-d') . '.log', 'a');
+    if (!empty($config['log_path']) && is_dir($config['log_path']) && is_writable($config['log_path'])) {
+      $this->logfile = fopen($config['log_path'] . 'activity-' . date('Y-m-d') . '.log', 'a');
+    }
+    else {
+      $this->logfile = fopen('php://stderr', 'w');
+    }
     $this->log('Starting...');
     $this->running = TRUE;
   }
