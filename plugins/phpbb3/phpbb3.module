@@ -1,0 +1,10 @@
+<?php
+
+function phpbb3_init($config) {
+  $phpbb_root_path = $config['root_path'];
+  // Bootstrap the phpBB system.
+  require_once __DIR__ . '/phpbb3_bootstrap.php';
+  // Load the plugin.
+  require_once __DIR__ . '/JabberAuthPhpBB3.php';
+  return new JabberAuthPhpBB3($config['auth'], $config['db']);
+}

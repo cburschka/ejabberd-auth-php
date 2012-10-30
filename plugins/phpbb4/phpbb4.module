@@ -1,0 +1,10 @@
+<?php
+
+function phpbb4_init($config) {
+  $phpbb_root_path = $config['root_path'];
+  // Bootstrap the phpBB system.
+  require_once __DIR__ . '/phpbb4_bootstrap.php';
+  // Load the plugin.
+  require_once __DIR__ . '/JabberAuthPhpBB4.php';
+  return new JabberAuthPhpBB4($config['auth'], $config['db']);
+}
