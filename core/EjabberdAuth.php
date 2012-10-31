@@ -1,20 +1,16 @@
 <?php
-// Arancaytar, October 2012
-// This is a general PHP implementation of the ejabberd auth protocol.
 
-abstract class JabberAuth {
+/**
+ * Runs constantly and takes requests from an input stream
+ * as specified in the ejabberd auth protocol.
+ */
+class EjabberdAuth {
   var $running;
 
-  abstract function isuser($username, $server);
-  abstract function auth($username, $server, $password);
-  abstract function setpass($username, $server, $password);
-  abstract function tryregister($username, $server, $password);
-  abstract function removeuser($username, $server);
-
-  function init() {
-    global $config;
+  function __construct($config, EjabberdAuthBridge $bridge) {
     $this->stdin = fopen('php://stdin', 'r');
     $this->stdout = fopen('php://stdout', 'w');
+    $this->bridge = $bridge;
     if (!empty($config['log_path']) && is_dir($config['log_path']) && is_writable($config['log_path'])) {
       $this->logfile = fopen($config['log_path'] . 'activity-' . date('Y-m-d') . '.log', 'a');
     }
@@ -74,22 +70,22 @@ abstract class JabberAuth {
     switch ($command) {
       case 'isuser':
         list($username, $server) = $args;
-        return $this->isuser($username, $server);
+        return $this->bridge->isuser($username, $server);
       case 'auth':
         list($username, $server, $password) = $args;
-        return $this->auth($username, $server, $password);
+        return $this->bridge->auth($username, $server, $password);
       case 'setpass':
         list($username, $server, $password) = $args;
-        return $this->setpass($username, $server, $password);
+        return $this->bridge->setpass($username, $server, $password);
       case 'tryregister':
         list($username, $server, $password) = $args;
-        return $this->tryregister($username, $server, $password);
+        return $this->bridge->tryregister($username, $server, $password);
       case 'removeuser':
         list($username, $server) = $args;
-        return $this->removeuser($username, $server);
+        return $this->bridge->removeuser($username, $server);
       case 'removeuser3':
         list($username, $server, $password) = $args;
-        return $this->auth($username, $server, $password) && $this->removeuser($username, $password);
+        return $this->bridge->auth($username, $server, $password) && $this->bridge->removeuser($username, $password);
       default:
         $this->stop();
     }

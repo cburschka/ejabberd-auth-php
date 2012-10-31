@@ -1,10 +1,11 @@
 <?php
 
 function phpbb3_init($config) {
+  global $phpbb_root_path;
   $phpbb_root_path = $config['root_path'];
   // Bootstrap the phpBB system.
   require_once __DIR__ . '/phpbb3_bootstrap.php';
   // Load the plugin.
-  require_once __DIR__ . '/JabberAuthPhpBB3.php';
-  return new JabberAuthPhpBB3($config['auth'], $config['db']);
+  require_once __DIR__ . '/BridgePhpBB3.php';
+  return new BridgePhpBB3($auth, $db);
 }

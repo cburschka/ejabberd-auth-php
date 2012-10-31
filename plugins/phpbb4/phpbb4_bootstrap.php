@@ -6,6 +6,11 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
+if (!file_exists($phpbb_root_path . 'includes/startup.' . $phpEx)) {
+  file_put_contents('php://stderr', "phpBB not found at <{$phpbb_root_path}>.\n");
+  exit;
+}
+
 require($phpbb_root_path . 'includes/startup.' . $phpEx);
 require_once __DIR__ . '/noweb_user.php';
 

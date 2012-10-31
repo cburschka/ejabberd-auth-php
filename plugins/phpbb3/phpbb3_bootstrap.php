@@ -1,7 +1,12 @@
 <?php
 define('IN_PHPBB', TRUE);
+global $phpEx, $db, $cache, $user, $config;
 $phpEx = 'php';
 
+if (!file_exists($phpbb_root_path . 'includes/startup.' . $phpEx)) {
+  file_put_contents('php://stderr', "phpBB not found at <{$phpbb_root_path}>.\n");
+  exit;
+}
 require($phpbb_root_path . 'includes/startup.' . $phpEx);
 
 if (file_exists($phpbb_root_path . 'config.' . $phpEx))
@@ -30,7 +35,7 @@ require($phpbb_root_path . 'includes/utf/utf_tools.' . $phpEx);
 // Instantiate some basic classes
 $user		= new noweb_user();
 $auth		= new auth();
-$db			= new $sql_db();
+$db		= new $sql_db();
 $cache		= new cache();
 
 // Connect to DB
