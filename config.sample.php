@@ -19,7 +19,7 @@ $config['drupal7'] = array(
 );
 
 $config['drupal8'] = array(
-  'root_path' => '' /* path to your Drupal 7 installation */,
+  'root_path' => '' /* path to your Drupal 8 installation */,
   'site' => 'default' /* site directory */,
 );
 
