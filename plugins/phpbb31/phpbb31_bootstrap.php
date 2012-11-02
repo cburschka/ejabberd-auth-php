@@ -1,5 +1,6 @@
 <?php
 define('IN_PHPBB', TRUE);
+global $phpEx, $config, $db, $user;
 $phpEx = 'php';
 
 use Symfony\Component\Config\FileLocator;
@@ -19,6 +20,13 @@ if (file_exists($phpbb_root_path . 'config.' . $phpEx))
 	require($phpbb_root_path . 'config.' . $phpEx);
 }
 
+
+if (!defined('PHPBB_INSTALLED'))
+  {
+    file_put_contents('php://stderr', "phpBB needs to be installed first.\n");
+    exit;
+  }
+
 // Include files
 require($phpbb_root_path . 'includes/class_loader.' . $phpEx);
 require($phpbb_root_path . 'includes/di/processor/interface.' . $phpEx);
@@ -30,9 +38,6 @@ require($phpbb_root_path . 'includes/functions_content.' . $phpEx);
 require($phpbb_root_path . 'includes/constants.' . $phpEx);
 require($phpbb_root_path . 'includes/db/' . ltrim($dbms, 'dbal_') . '.' . $phpEx);
 require($phpbb_root_path . 'includes/utf/utf_tools.' . $phpEx);
-
-// Set PHP error handler to ours
-set_error_handler(defined('PHPBB_MSG_HANDLER') ? PHPBB_MSG_HANDLER : 'msg_handler');
 
 $phpbb_container = new ContainerBuilder();
 $loader = new YamlFileLoader($phpbb_container, new FileLocator($phpbb_root_path.'/config'));
