@@ -1,12 +1,10 @@
 <?php
 
-class JabberAuthPhpBB extends JabberAuth {
+class BridgePhpBB31 extends EjabberdAuthBridge {
   var $auth;
   var $db;
   
-  function __construct($auth, $db, $logpath) {
-    $this->logpath = $logpath;
-    parent::init();
+  function __construct($auth, $db) {
     $this->auth = $auth;
     $this->db = $db;
   }

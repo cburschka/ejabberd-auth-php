@@ -1,6 +1,6 @@
 <?php
 
-class BridgePhpBB3 extends EjabberdAuthBridge {
+class BridgePhpBB30 extends EjabberdAuthBridge {
   var $auth;
   var $db;
   
