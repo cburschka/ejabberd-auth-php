@@ -5,12 +5,12 @@
 $config['plugin'] = 'phpbb3';
 $config['log_path'] = __DIR__ . '/logs/';
 
-$config['phpbb3'] = array(
-  'root_path' => '' /* path to your phpBB3 installation */,
+$config['phpbb30'] = array(
+  'root_path' => '' /* path to your phpBB30 installation */,
 );
 
-$config['phpbb4'] = array(
-  'root_path' => '' /* path to your phpBB4 installation */,
+$config['phpbb31'] = array(
+  'root_path' => '' /* path to your phpBB31 installation */,
 );
 
 $config['drupal7'] = array(
