@@ -7,8 +7,8 @@ fwrite($stderr, "Enter the password: ");
 $password = trim(fgets($in));
 
 $str = array(
-  array('isuser', $user),
-  array('isuser', '123456789'),
+  array('isuser', $user, 'localhost'),
+  array('isuser', '123456789', 'localhost'),
   array('auth', $user, 'localhost', $password),
   array('auth', $user, 'localhost', '123456789'),
   
