@@ -2,7 +2,7 @@
 
 /* copy this file to config.php */
 
-$config['plugin'] = 'phpbb3';
+$config['plugin'] = '';
 $config['log_path'] = __DIR__ . '/logs/';
 
 $config['phpbb30'] = array(
@@ -22,4 +22,3 @@ $config['drupal8'] = array(
   'root_path' => '' /* path to your Drupal 8 installation */,
   'site' => 'default' /* site directory */,
 );
-
