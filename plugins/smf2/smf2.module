@@ -12,3 +12,12 @@ function smf2_init($config) {
   require_once __DIR__ . '/BridgeSMF2.php';
   return new BridgeSMF2();
 }
+
+function smf_ssi($function) {
+  $args = func_get_args();
+  array_shift($args);
+
+  ob_start();
+  call_user_func_array("ssi_$function", $args);
+  file_put_contents('php://stderr', ob_get_clean());
+}
