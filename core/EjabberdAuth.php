@@ -8,14 +8,12 @@ class EjabberdAuth {
   var $running;
 
   function __construct($config, EjabberdAuthBridge $bridge) {
-    $this->stdin = fopen('php://stdin', 'r');
-    $this->stdout = fopen('php://stdout', 'w');
     $this->bridge = $bridge;
     if (!empty($config['log_path']) && is_dir($config['log_path']) && is_writable($config['log_path'])) {
       $this->logfile = fopen($config['log_path'] . 'activity-' . date('Y-m-d') . '.log', 'a');
     }
     else {
-      $this->logfile = fopen('php://stderr', 'w');
+      $this->logfile = STDERR;
     }
     $this->log('Starting...');
     $this->running = TRUE;
@@ -38,7 +36,7 @@ class EjabberdAuth {
   }
 
   function read() {
-    $input = fread($this->stdin, 2);
+    $input = fread(STDIN, 2);
     if (!$input) {
       return $this->stop();
     }
@@ -47,14 +45,14 @@ class EjabberdAuth {
     $length = $input[1];
     if($length > 0) {
       $this->log("Reading $length bytes...");
-      $data = fread($this->stdin, $length);
+      $data = fread(STDIN, $length);
       return $data;
     }
   }
 
   function write($data) {
     $this->log("OUT: $data");
-    fwrite($this->stdout, pack("nn", 2, $data));
+    fwrite(STDOUT, pack("nn", 2, $data));
   }
 
   function log($data) {
