@@ -43,3 +43,14 @@ license as the core project.
 
 GPL v2: http://www.gnu.org/licenses/gpl-2.0.txt
 GPL v3: http://www.gnu.org/licenses/gpl-3.0.txt
+
+## SUPPORT
+
+I will not be able to offer support or reliable maintenance for this software,
+or any of its plugins. Functionality may be change without notice. This software
+is (for now) indefinitely in pre-release mode, and there are no current plans
+for a stable release.
+
+Your best bet for using this software is to fork it and maintain your own
+codebase. I will gladly take pull requests under consideration if you feel like
+contributing.
