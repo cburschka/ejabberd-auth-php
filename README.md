@@ -19,8 +19,13 @@ In order to create a new plugin named {xyz}, you will need the following:
 
 * A class extending EjabberdAuthBridge and implementing its methods.
 * A file named {xyz}.module that contains the function {xyz}_init().
-* {xyz}_init() will receive its appropriate conf array in config.php.
-* {xyz}_init() must return an instance of the extended class.
+
+{xyz}_init() will receive its appropriate conf array in config.php and must
+return an instance of the extended class.
+
+The class methods must return boolean values indicating success or failure.
+It is generally recommended NOT to allow account creation, account deletion or
+password changes, and instead to simply return FALSE in these methods.
 
 ## LICENSE
 
