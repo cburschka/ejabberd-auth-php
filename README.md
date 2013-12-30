@@ -15,12 +15,12 @@ Potential candidates for further bridges are WordPress, MediaWiki, Joomla! and M
 
 ## EXTENDING
 
-In order to create a new plugin named <xyz>, you will need the following:
+In order to create a new plugin named {xyz}, you will need the following:
 
 * A class extending EjabberdAuthBridge and implementing its methods.
-* A file named <xyz>.module that contains the function <xyz>_init().
-* <xyz>_init() will receive its appropriate conf array in config.php.
-* <xyz>_init() must return an instance of the extended class.
+* A file named {xyz}.module that contains the function {xyz}_init().
+* {xyz}_init() will receive its appropriate conf array in config.php.
+* {xyz}_init() must return an instance of the extended class.
 
 ## LICENSE
 
