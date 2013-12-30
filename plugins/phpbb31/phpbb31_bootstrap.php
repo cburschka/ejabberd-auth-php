@@ -52,8 +52,8 @@ $phpbb_class_loader_ext = $phpbb_container->get('class_loader.ext');
 
 // Instantiate some basic classes
 $user = new noweb_user;
-$auth		= $phpbb_container->get('auth');
-$db			= $phpbb_container->get('dbal.conn');
+$auth = $phpbb_container->get('auth');
+$db   = $phpbb_container->get('dbal.conn');
 
 // Grab global variables, re-cache if necessary
 $config = $phpbb_container->get('config');
