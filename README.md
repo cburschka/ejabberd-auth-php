@@ -10,6 +10,7 @@ Currently implemented bridges:
 * phpBB 3.1 (unstable)
 * Drupal 7.x
 * Drupal 8.x (unstable)
+* SMF 2.x
 
 Potential candidates for further bridges are WordPress, MediaWiki, Joomla! and Moodle.
 
@@ -29,12 +30,16 @@ password changes, and instead to simply return FALSE in these methods.
 
 ## LICENSE
 
-The core project, without plugins, is available under the terms of the GNU General Public License, version 2 or later.
+The core project, without plugins, may be distributed or modified under the 
+under the terms of the GNU General Public License, version 2 or later.
 
-Plugins are individually licensed:
+The following plugins duplicate the code of other software, and are licensed
+separately:
 
-* phpBB, all versions: GNU General Public License, v2
-* Drupal, all versions: GNU General Public License, v2 and later.
+* phpBB, all versions: GNU General Public License, version 2
+
+The remaining plugins contain no duplicated code, and are covered by the same 
+license as the core project.
 
 GPL v2: http://www.gnu.org/licenses/gpl-2.0.txt
 GPL v3: http://www.gnu.org/licenses/gpl-3.0.txt
