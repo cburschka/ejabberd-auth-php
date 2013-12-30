@@ -22,3 +22,7 @@ $config['drupal8'] = array(
   'root_path' => '' /* path to your Drupal 8 installation */,
   'site' => 'default' /* site directory */,
 );
+
+$config['smf2'] = array(
+  'root_path' => '' /* path to your SMF 2.x installation */,
+);
