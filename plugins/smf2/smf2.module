@@ -1,0 +1,14 @@
+<?php
+
+function smf2_init($config) {
+  $smf_root_path = $config['root_path'];
+  if (file_exists($smf_root_path . 'SSI.php')) {
+    include_once $smf_root_path . 'SSI.php';
+  }
+  else {
+    file_put_contents('php://stderr', "SMF not found at <{$smf_root_path}>.\n");
+    exit;
+  }
+  require_once __DIR__ . '/BridgeSMF2.php';
+  return new BridgeSMF2();
+}
