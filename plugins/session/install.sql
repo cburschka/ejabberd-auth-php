@@ -1,0 +1,5 @@
+CREATE TABLE `{TAB}` (
+	username TEXT PRIMARY KEY,
+	secret VARCHAR(40) PRIMARY KEY,
+	created INT INDEX,
+);
