@@ -1,8 +1,10 @@
-## ABOUT
+ejabberd-auth-php
+=================
 
 This is a collection of bridges allowing an ejabberd XMPP server to use a locally installed PHP-based CMS for external authentication.
 
-## FEATURES
+Features
+--------
 
 Currently implemented bridges:
 
@@ -14,7 +16,8 @@ Currently implemented bridges:
 
 Potential candidates for further bridges are WordPress, MediaWiki, Joomla! and Moodle.
 
-## EXTENDING
+Extending
+---------
 
 In order to create a new plugin named {xyz}, you will need the following:
 
@@ -28,7 +31,8 @@ The class methods must return boolean values indicating success or failure.
 It is generally recommended NOT to allow account creation, account deletion or
 password changes, and instead to simply return FALSE in these methods.
 
-## LICENSE
+License
+-------
 
 The core project, without plugins, may be distributed or modified under the 
 under the terms of the GNU General Public License, version 2 or later.
@@ -44,10 +48,11 @@ license as the core project.
 GPL v2: http://www.gnu.org/licenses/gpl-2.0.txt
 GPL v3: http://www.gnu.org/licenses/gpl-3.0.txt
 
-## SUPPORT
+Support
+-------
 
 I will not be able to offer support or reliable maintenance for this software,
-or any of its plugins. Functionality may be change without notice. This software
+or any of its plugins. Functionality may be changed without notice. This software
 is (for now) indefinitely in pre-release mode, and there are no current plans
 for a stable release.
 
