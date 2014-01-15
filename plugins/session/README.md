@@ -23,8 +23,9 @@ The control flow is like this:
   If it exists and hasn't expired yet, it confirms the authentication and the user
   is logged in without a password.
 
+
 Security Considerations
-=======================
+-----------------------
 
 The one-time key is transmitted in clear, and can be intercepted if the connection
 is not encrypted. But the same channel is already used to transmit the password
