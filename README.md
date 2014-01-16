@@ -31,6 +31,12 @@ The class methods must return boolean values indicating success or failure.
 It is generally recommended NOT to allow account creation, account deletion or
 password changes, and instead to simply return FALSE in these methods.
 
+If you wish to use the `session` plugin with your bridge, you will also need to
+implement a function named {xyz}_session(). This function takes no arguments.
+It is called in a non-CLI context, and should return the username of the
+currently logged-in user who made the web request, or `FALSE` if no user
+is logged in.
+
 License
 -------
 

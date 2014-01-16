@@ -1,6 +1,6 @@
 <?php
 
-function smf2_init($config) {
+function smf2_bootstrap($config) {
   $smf_root_path = $config['root_path'];
   if (file_exists($smf_root_path . 'SSI.php')) {
     include_once $smf_root_path . 'SSI.php';
@@ -9,8 +9,18 @@ function smf2_init($config) {
     file_put_contents('php://stderr', "SMF not found at <{$smf_root_path}>.\n");
     exit;
   }
+}
+
+function smf2_init($config) {
+  smf2_bootstap($config);
   require_once __DIR__ . '/BridgeSMF2.php';
   return new BridgeSMF2();
+}
+
+function smf2_session($config) {
+  smf2_bootstap($config);
+  $user = smf_ssi('welcome', NULL);
+  return (empty($user['is_guest']) && !empty($user['name'])) ? $user['name'] : FALSE;
 }
 
 function smf_ssi($function) {
