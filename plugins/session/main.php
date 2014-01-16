@@ -1,21 +1,22 @@
 <?php
 
 define('ROOT', __DIR__ . '/../../');
-require_once ROOT . 'core/EjabberdAuthBridge.php';
+
+require_once ROOT . 'plugins/session/session.module';
 
 function create_key($salt) {
-  require_once ROOT . 'config.php';
-  require_once ROOT . 'plugins/session/session.module';
-  $bridge = session_init($config['session']);
-  $plugin = $config['session']['plugin'];
-  $plugin_conf = $config[$plugin];
-  $plugin_id = $plugin;
-  require_once ROOT . 'plugins/' . $plugin_id . '/' . $plugin_id . '.module';
-  $function = $plugin_id . '_session';
+  require_once __DIR__ . '/config.php';
+  $db = session_db($config['mysql']);
+  $plugin = $config['plugin'];
+  $plugin_conf = $config['config'];
+  require_once ROOT . 'plugins/' . $plugin . '/' . $plugin . '.module';
+  $function = $plugin . '_session';
+
   $username = function_exists($function) ? $function($plugin_conf) : NULL;
   if ($username) {
     $entry = ['user' => $username, 'secret' => sha1($salt . time() . mt_rand()), 'time' => time()];
-    $bridge->create($entry);
+    $query = $db->prepare(sprintf('INSERT INTO `%s` (`username`, `secret`, `created`) VALUES (:user, :secret, :time);', $config['mysql']['tablename']));
+    $query->execute([':user' => $entry['user'], ':secret' => $entry['secret'], ':time' => $entry['time']]);
     return $entry;
   }
   return FALSE;

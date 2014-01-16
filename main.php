@@ -9,19 +9,20 @@ main();
 
 function main() {
   require_once ROOT . 'config.php';
-  if (!empty($config['plugin']) && !empty($config[$config['plugin']])) {
-    $plugin_file = 'plugins/' . $config['plugin'] . '/' . $config['plugin'] . '.module';
-    if (file_exists(ROOT . $plugin_file)) {
-      require_once ROOT . $plugin_file;
-      $function = $config['plugin'] . '_init';
-      $auth = new EjabberdAuth($config, $function($config[$config['plugin']]));
-      $auth->run();
-    }
-    else {
-      fwrite(STDERR, "Plugin <{$plugin_file}> not found.\n");
+  $bridges = [];
+  foreach ($config as $domain => $plugins) {
+    $bridges[$domain] = [];
+    foreach ($plugins as $settings) {
+      $plugin_file = 'plugins/' . $settings['plugin'] . '/' . $settings['plugin'] . '.module';
+      if (file_exists(ROOT . $plugin_file)) {
+        require_once ROOT . $plugin_file;
+        $function = $settings['plugin'] . '_init';
+        $bridges[$domain][] = $function($settings['config']);
+      }
+      else {
+        return fwrite(STDERR, "Plugin <{$plugin_file}> not found.\n");
+      }
     }
   }
-  else {
-    fwrite(STDERR, 'Incomplete configuration: $config[\'plugin\'] must be set to <name>, and $config[<name>] populated.' . "\n");
-  }
+  (new EjabberdAuth($meta, $bridges))->run();
 }

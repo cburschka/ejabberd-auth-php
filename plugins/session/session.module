@@ -1,10 +1,11 @@
 <?php
 
-function session_init($config) {
-  $v = $config['mysql'];
+function session_db($mysql) {
   $options = [PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'];
-  $pdo = new PDO($v['dsn'], $v['username'], $v['password'], $options);
+  return new PDO($mysql['dsn'], $mysql['username'], $mysql['password'], $options);
+}
 
+function session_init($config) {
   require_once __DIR__ . '/BridgeSession.php';
-  return new BridgeSession($pdo, $config);
+  return new BridgeSession(session_db($config['mysql']), $config);
 }

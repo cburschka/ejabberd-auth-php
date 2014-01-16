@@ -7,17 +7,15 @@
 class EjabberdAuth {
   var $running;
 
-  function __construct($config, EjabberdAuthBridge $bridge) {
-    $this->bridge = $bridge;
-    $this->bridge->parent = $this;
-    if (!empty($config['log_path']) && is_dir($config['log_path']) && is_writable($config['log_path'])) {
-      $this->logfile = fopen($config['log_path'] . 'activity-' . date('Y-m-d') . '.log', 'a');
+  function __construct($meta, $bridges) {
+    $this->bridges = $bridges;
+    foreach ($bridges as $domain) foreach ($domain as $bridge) {
+      $bridge->parent = $this;
     }
-    else {
-      $this->logfile = STDERR;
-    }
-    $this->log('Starting...');
-    $this->running = TRUE;
+    if (!empty($meta['log_path']) && is_dir($meta['log_path']) && is_writable($meta['log_path']))
+      $this->logfile = fopen($meta['log_path'] . 'activity-' . date('Y-m-d') . '.log', 'a');
+    else $this->logfile = STDERR;
+    $this->log('Initialized.');
   }
 
   function stop() {
@@ -26,6 +24,8 @@ class EjabberdAuth {
   }
 
   function run() {
+    $this->log('Starting...');
+    $this->running = TRUE;
     while ($this->running) {
       $data = $this->read();
       if ($data) {
@@ -61,18 +61,19 @@ class EjabberdAuth {
   }
 
   function execute($data) {
-    $args = explode(':', $data);
-    $command = array_shift($args);
-    // Only log the username for security.
-    $this->log("Executing $command on {$args[0]}");
+    $args = explode(':', $data . ':::');
+    list($command, $username, $server, $password) = $args;
+
+    // Don't log the password, obviously.
+    $this->log("Executing $command on {$username}@{$server}");
+
+    $domain = array_key_exists($server, $this->bridges) ? $server : '*';
 
     switch ($command) {
       case 'isuser':
-        list($username, $server) = $args;
-        return $this->bridge->isuser($username, $server);
+        return $this->isuser($domain, $username, $server);
       case 'auth':
-        list($username, $server, $password) = $args;
-        return $this->bridge->auth($username, $server, $password);
+        return $this->auth($domain, $username, $server, $password);
       case 'setpass':
       case 'tryregister':
       case 'removeuser':
@@ -81,5 +82,17 @@ class EjabberdAuth {
       default:
         $this->stop();
     }
+  }
+
+  function isuser($domain, $username, $server) {
+    foreach ($this->bridges[$domain] as $bridge)
+      if ($bridge->isuser($username, $server)) return TRUE;
+    return FALSE;
+  }
+
+  function auth($domain, $username, $server, $password) {
+    foreach ($this->bridges[$domain] as $bridge)
+      if ($bridge->auth($username, $server, $password)) return TRUE;
+    return FALSE;
   }
 }
