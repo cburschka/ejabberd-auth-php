@@ -9,6 +9,7 @@ class EjabberdAuth {
 
   function __construct($config, EjabberdAuthBridge $bridge) {
     $this->bridge = $bridge;
+    $this->bridge->parent = $this;
     if (!empty($config['log_path']) && is_dir($config['log_path']) && is_writable($config['log_path'])) {
       $this->logfile = fopen($config['log_path'] . 'activity-' . date('Y-m-d') . '.log', 'a');
     }

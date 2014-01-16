@@ -12,13 +12,13 @@ function smf2_bootstrap($config) {
 }
 
 function smf2_init($config) {
-  smf2_bootstap($config);
+  smf2_bootstrap($config);
   require_once __DIR__ . '/BridgeSMF2.php';
   return new BridgeSMF2();
 }
 
 function smf2_session($config) {
-  smf2_bootstap($config);
+  smf2_bootstrap($config);
   $user = smf_ssi('welcome', NULL);
   return (empty($user['is_guest']) && !empty($user['name'])) ? $user['name'] : FALSE;
 }
