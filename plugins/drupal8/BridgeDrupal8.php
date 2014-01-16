@@ -8,16 +8,4 @@ class BridgeDrupal8 extends EjabberdAuthBridge {
   function auth($username, $server, $password) {
     return user_authenticate($username, $password) !== FALSE;
   }
-
-  function setpass($username, $server, $password) {
-    return FALSE;
-  }
-
-  function tryregister($username, $server, $password) {
-    return FALSE;
-  }
-
-  function removeuser($username, $server) {
-    return FALSE;
-  }
 }

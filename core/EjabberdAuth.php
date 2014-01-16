@@ -74,17 +74,10 @@ class EjabberdAuth {
         list($username, $server, $password) = $args;
         return $this->bridge->auth($username, $server, $password);
       case 'setpass':
-        list($username, $server, $password) = $args;
-        return $this->bridge->setpass($username, $server, $password);
       case 'tryregister':
-        list($username, $server, $password) = $args;
-        return $this->bridge->tryregister($username, $server, $password);
       case 'removeuser':
-        list($username, $server) = $args;
-        return $this->bridge->removeuser($username, $server);
       case 'removeuser3':
-        list($username, $server, $password) = $args;
-        return $this->bridge->auth($username, $server, $password) && $this->bridge->removeuser($username, $password);
+        return FALSE;
       default:
         $this->stop();
     }

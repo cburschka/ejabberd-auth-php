@@ -19,18 +19,4 @@ class BridgePhpBB30 extends EjabberdAuthBridge {
     $result = $this->auth->login($username, $password);
     return $result['status'] == LOGIN_SUCCESS;
   }
-  
-  // The following functions are disabled. This script will not change the phpBB user database.
-  
-  function setpass($username, $server, $password) {
-    return FALSE;
-  }
-
-  function tryregister($username, $server, $password) {
-    return FALSE;
-  }
-
-  function removeuser($username, $server) {
-    return FALSE;
-  }
 }

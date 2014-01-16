@@ -16,16 +16,4 @@ class BridgeSMF2 extends EjabberdAuthBridge {
   function auth($username, $server, $password) {
     return smf_ssi('checkPassword', $username, $password, TRUE);
   }
-
-  function setpass($username, $server, $password) {
-    return FALSE;
-  }
-
-  function tryregister($username, $server, $password) {
-    return FALSE;
-  }
-
-  function removeuser($username, $server) {
-    return FALSE;
-  }
 }
