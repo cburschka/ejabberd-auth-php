@@ -9,7 +9,6 @@ main();
 
 function main() {
   require_once ROOT . 'config.php';
-  $err = fopen('php://stderr', 'w');
   if (!empty($config['plugin']) && !empty($config[$config['plugin']])) {
     $plugin_file = 'plugins/' . $config['plugin'] . '/' . $config['plugin'] . '.module';
     if (file_exists(ROOT . $plugin_file)) {
@@ -19,10 +18,10 @@ function main() {
       $auth->run();
     }
     else {
-      fwrite($err, "Plugin <{$plugin_file}> not found.\n");
+      fwrite(STDERR, "Plugin <{$plugin_file}> not found.\n");
     }
   }
   else {
-    fwrite($err, 'Incomplete configuration: $config[\'plugin\'] must be set to <name>, and $config[<name>] populated.' . "\n");
+    fwrite(STDERR, 'Incomplete configuration: $config[\'plugin\'] must be set to <name>, and $config[<name>] populated.' . "\n");
   }
 }
