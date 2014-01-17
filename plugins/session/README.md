@@ -26,16 +26,12 @@ The control flow is like this:
 Installation
 ------------
 
-This plugin uses a database table, described in the packaged install.sql file.
-Install it with this command:
+First, configure the database connection in `config.php` by filling in the host,
+database, user, password and table name.
 
-    cat ./install.sql | replace '{TAB}' '<tablename>' | \
-    mysql -h <host> -D <db> -u <user> -p<password>
+Then, install the table by running `php plugins/session/install.php`.
 
-Next, you need to configure the database connection both in the main configuration
-file and in the local `./config.php` of this plugin.
-
-Finally, link the `www/rpc.php` file inside your website root somewhere inside
+Finally, link the `www/rpc.php` file in your website root somewhere within
 your forum's cookie domain and path (most forums set the path to `/`, so the
 domain should be sufficient).
 

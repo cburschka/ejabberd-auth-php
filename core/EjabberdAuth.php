@@ -7,13 +7,13 @@
 class EjabberdAuth {
   var $running;
 
-  function __construct($meta, $bridges) {
-    $this->bridges = $bridges;
-    foreach ($bridges as $domain) foreach ($domain as $bridge) {
-      $bridge->parent = $this;
-    }
-    if (!empty($meta['log_path']) && is_dir($meta['log_path']) && is_writable($meta['log_path']))
-      $this->logfile = fopen($meta['log_path'] . 'activity-' . date('Y-m-d') . '.log', 'a');
+  function __construct($config, $bridge, $session) {
+    $this->bridge = $bridge;
+    $this->session = $session;
+    $this->bridge->parent = $this;
+    $this->session->parent = $this;
+    if (!empty($config['log_path']) && is_dir($config['log_path']) && is_writable($config['log_path']))
+      $this->logfile = fopen($config['log_path'] . 'activity-' . date('Y-m-d') . '.log', 'a');
     else $this->logfile = STDERR;
     $this->log('Initialized.');
   }
@@ -67,13 +67,13 @@ class EjabberdAuth {
     // Don't log the password, obviously.
     $this->log("Executing $command on {$username}@{$server}");
 
-    $domain = array_key_exists($server, $this->bridges) ? $server : '*';
-
     switch ($command) {
       case 'isuser':
-        return $this->isuser($domain, $username, $server);
+        return $this->session->isuser($username, $server) ||
+               $this->bridge->isuser($username, $server);
       case 'auth':
-        return $this->auth($domain, $username, $server, $password);
+        return $this->session->auth($username, $server, $password) ||
+               $this->bridge->auth($username, $server, $password);
       case 'setpass':
       case 'tryregister':
       case 'removeuser':
@@ -82,17 +82,5 @@ class EjabberdAuth {
       default:
         $this->stop();
     }
-  }
-
-  function isuser($domain, $username, $server) {
-    foreach ($this->bridges[$domain] as $bridge)
-      if ($bridge->isuser($username, $server)) return TRUE;
-    return FALSE;
-  }
-
-  function auth($domain, $username, $server, $password) {
-    foreach ($this->bridges[$domain] as $bridge)
-      if ($bridge->auth($username, $server, $password)) return TRUE;
-    return FALSE;
   }
 }

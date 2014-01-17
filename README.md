@@ -1,7 +1,8 @@
 ejabberd-auth-php
 =================
 
-This is a collection of bridges allowing an ejabberd XMPP server to use a locally installed PHP-based CMS for external authentication.
+This is a collection of bridges allowing an ejabberd XMPP server to use a locally
+installed PHP-based CMS for external authentication.
 
 Features
 --------
@@ -15,6 +16,21 @@ Currently implemented bridges:
 * SMF 2.x
 
 Potential candidates for further bridges are WordPress, MediaWiki, Joomla! and Moodle.
+
+Installation
+------------
+
+Copy the file `config.sample.php` to `config.php` and fill in the appropriate
+values.
+
+If you want to add session authentication, also read [plugins/session/README.md](
+plugins/session/README.md). Otherwise, remove the relevant section of `config.php`.
+
+Open your ejabberd configuration (`/etc/ejabberd/ejabberd.cfg`) and set the
+external authentication script:
+
+    {auth_method, external}.
+    {extauth_program, ".../ejabberd-auth-php/main.php"}.
 
 Extending
 ---------

@@ -9,20 +9,19 @@ main();
 
 function main() {
   require_once ROOT . 'config.php';
-  $bridges = [];
-  foreach ($config as $domain => $plugins) {
-    $bridges[$domain] = [];
-    foreach ($plugins as $settings) {
-      $plugin_file = 'plugins/' . $settings['plugin'] . '/' . $settings['plugin'] . '.module';
-      if (file_exists(ROOT . $plugin_file)) {
-        require_once ROOT . $plugin_file;
-        $function = $settings['plugin'] . '_init';
-        $bridges[$domain][] = $function($settings['config']);
-      }
-      else {
-        return fwrite(STDERR, "Plugin <{$plugin_file}> not found.\n");
-      }
-    }
+  $plugin_file = 'plugins/' . $config['plugin'] . '/' . $config['plugin'] . '.module';
+  if (file_exists(ROOT . $plugin_file)) {
+    require_once ROOT . $plugin_file;
+    $function = $config['plugin'] . '_init';
+    $bridge = $function($config['plugin_conf']);
   }
-  (new EjabberdAuth($meta, $bridges))->run();
+  else {
+    return fwrite(STDERR, "Plugin <{$plugin_file}> not found.\n");
+  }
+  if (!empty($config['session'])) {
+    require_once 'plugins/session/session.module';
+    $session = session_init($config['session']);
+  }
+  else $session = NULL;
+  (new EjabberdAuth($config, $bridge, $session))->run();
 }
