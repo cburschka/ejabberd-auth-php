@@ -23,6 +23,38 @@ The control flow is like this:
   If it exists and hasn't expired yet, it confirms the authentication and the user
   is logged in without a password.
 
+Installation
+------------
+
+This plugin uses a database table, described in the packaged install.sql file.
+Install it with this command:
+
+    cat ./install.sql | replace '{TAB}' '&lt;tablename&gt;' | \
+    mysql -h &lt;host&gt; -D &lt;db&gt; -u &lt;user&gt; -p&lt;password&gt;
+
+Next, you need to configure the database connection both in the main configuration
+file and in the local `./config.php` of this plugin.
+
+Finally, link the `www/rpc.php` file inside your website root somewhere inside
+your forum's cookie domain and path (most forums set the path to `/`, so the
+domain should be sufficient).
+
+Usage
+-----
+
+Whenever you need to authenticate to ejabberd, make a POST request to the URL
+that points at `www/rpc.php` with `salt` set to a reasonably random 16 character
+value.
+
+If the client making the POST request has a valid session for the site you're
+authenticating with, then you will receive a JSON-encoded response as follows:
+
+    `{"user":"&lt;user&gt;","secret":"&lt;secret&gt;","time":"&lt;time&gt;"}
+
+From the point in `&lt;time&gt;` to however long you configured the timeout
+(60 seconds are recommended), `&lt;secret&gt;` will be accepted as a password
+by ejabberd for `&lt;user&gt;` on any domains you set up to use the session
+plugin.
 
 Security Considerations
 -----------------------
