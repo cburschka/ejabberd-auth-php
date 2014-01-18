@@ -38,11 +38,16 @@ domain should be sufficient).
 Usage
 -----
 
+Note: Standard security policies prevent JavaScript from making cross-domain
+requests, and particularly from transmitting cookies with such requests.
+Therefore, your forum, the `rpc.php` script, *and* the web client must be hosted
+on the same domain for this feature to work.
+
 Whenever you need to authenticate to ejabberd, make a POST request to the URL
 that points at `www/rpc.php` with `salt` set to a reasonably random 16 character
 value.
 
-If the client making the POST request has a valid session for the site you're
+If the client making the POST request transmits a valid session for the site you're
 authenticating with, then you will receive a JSON-encoded response as follows:
 
     `{"user":"<user>","secret":"<secret>","time":"<time>"}
