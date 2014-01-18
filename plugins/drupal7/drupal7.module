@@ -2,7 +2,7 @@
 
 use Drupal\Core\DrupalKernel;
 
-function drupal7_init($config) {
+function drupal7_bootstrap($config) {
   define('DRUPAL_ROOT', $config['root_path']);
   $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
   require_once DRUPAL_ROOT . '/includes/bootstrap.inc';
@@ -10,5 +10,14 @@ function drupal7_init($config) {
   require_once __DIR__ . '/BridgeDrupal7.php';
   drupal_static('conf_path', "sites/{$config['site']}");
   drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+}
+
+function drupal7_init($config) {
+  drupal7_bootstrap($config);
   return new BridgeDrupal7();
+}
+
+function drupal7_session($config) {
+  drupal7_bootstrap($config);
+  return user_is_logged_in() ? $GLOBALS['user']->name : FALSE;
 }

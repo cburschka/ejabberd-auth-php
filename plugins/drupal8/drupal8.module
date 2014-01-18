@@ -2,7 +2,7 @@
 
 use Drupal\Core\DrupalKernel;
 
-function drupal8_init($config) {
+function drupal8_bootstrap($config) {
   define('DRUPAL_ROOT', $config['root_path']);
   $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
   require_once DRUPAL_ROOT . '/core/includes/bootstrap.inc';
@@ -12,5 +12,14 @@ function drupal8_init($config) {
   drupal_bootstrap(DRUPAL_BOOTSTRAP_CODE);
   $kernel = new DrupalKernel('prod', FALSE, NULL, cache('bootstrap'));
   $kernel->boot();
+}
+
+function drupal8_init($config) {
+  drupal8_bootstrap($config);
   return new BridgeDrupal8();
+}
+
+function drupal8_session($config) {
+  drupal8_bootstrap($config);
+  return user_is_logged_in() ? $GLOBALS['user']->name : FALSE;
 }
