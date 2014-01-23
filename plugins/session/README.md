@@ -53,9 +53,8 @@ authenticating with, then you will receive a JSON-encoded response as follows:
     `{"user":"<user>","secret":"<secret>","time":"<time>"}
 
 From the point in `<time>` to however long you configured the timeout
-(60 seconds are recommended), `<secret>` will be accepted as a password
-by ejabberd for `<user>` on any domains you set up to use the session
-plugin.
+(60 seconds are the default), `<secret>` will be accepted once as a password
+for `<user>`.
 
 Security Considerations
 -----------------------
