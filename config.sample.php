@@ -17,11 +17,11 @@ $config = [
 
  // Remove this section if you are not using session authentication.
  'session' => [
-   'mysql' [
+   'mysql' => [
      'dsn' => 'mysql:host=localhost;dbname=DATABASE;charset=utf8',
      'username' => 'USER',
      'password' => 'PASSWORD',
-     'table' => 'TABLE',
+     'tablename' => 'TABLE',
    ],
    'timeout' => 60,
  ],
