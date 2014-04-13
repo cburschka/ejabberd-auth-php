@@ -11,7 +11,7 @@ class EjabberdAuth {
     $this->bridge = $bridge;
     $this->session = $session;
     $this->bridge->parent = $this;
-    $this->session->parent = $this;
+    if ($this->session) $this->session->parent = $this;
     if (!empty($config['log_path']) && is_dir($config['log_path']) && is_writable($config['log_path']))
       $this->logfile = fopen($config['log_path'] . 'activity-' . date('Y-m-d') . '.log', 'a');
     else $this->logfile = STDERR;
@@ -69,10 +69,10 @@ class EjabberdAuth {
 
     switch ($command) {
       case 'isuser':
-        return $this->session->isuser($username, $server) ||
+        return ($this->session && $this->session->isuser($username, $server)) ||
                $this->bridge->isuser($username, $server);
       case 'auth':
-        return $this->session->auth($username, $server, $password) ||
+        return ($this->session && $this->session->auth($username, $server, $password)) ||
                $this->bridge->auth($username, $server, $password);
       case 'setpass':
       case 'tryregister':
