@@ -13,6 +13,11 @@ $config = [
  'plugin' => 'PLUGIN',
  'plugin_conf' => [
    'root_path' => '</path/to/site>',
+   // if using redis authentication
+   'redis' => [
+	   'host' => 'localhost',
+	   'port' => '6379'
+   ]
  ],
 
  // Remove this section if you are not using session authentication.
