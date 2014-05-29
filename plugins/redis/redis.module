@@ -1,0 +1,12 @@
+<?php
+
+function redis_db($redisConfig) {
+	$redis = new Redis();
+	$redis->connect($redisConfig['host'],$redisConfig['port']);
+	return $redis;
+}
+
+function redis_init($config) {
+    require_once __DIR__ . '/BridgeRedis.php';
+    return new BridgeRedis(redis_db($config['redis']), $config);
+}
