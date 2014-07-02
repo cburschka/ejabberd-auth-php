@@ -20,7 +20,7 @@ function smf2_init($config) {
 function smf2_session($config) {
   smf2_bootstrap($config);
   $user = smf_ssi('welcome', NULL);
-  return (empty($user['is_guest']) && !empty($user['name'])) ? $user['name'] : FALSE;
+  return (empty($user['is_guest']) && !empty($user['username'])) ? $user['username'] : FALSE;
 }
 
 function smf_ssi($function) {
