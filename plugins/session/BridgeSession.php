@@ -10,7 +10,7 @@ class BridgeSession extends EjabberdAuthBridge {
     $this->table = $config['mysql']['tablename'];
     $this->_isuser = $this->db->prepare(sprintf('SELECT COUNT(*) FROM `%s` WHERE `username` = :user AND `created` >= :limit;', $this->table));
     $this->_auth = $this->db->prepare(sprintf('DELETE FROM `%s` WHERE `username` = :user AND `secret` = :secret AND `created` >= :limit;', $this->table));
-    $this->_prune = $this->db->prepare(sprintf('DELETE COUNT(*) FROM `%s` WHERE `created` < :limit;', $this->table));
+    $this->_prune = $this->db->prepare(sprintf('DELETE FROM `%s` WHERE `created` < :limit;', $this->table));
   }
 
   function prune() {
