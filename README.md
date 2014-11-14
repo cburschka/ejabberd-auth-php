@@ -26,12 +26,23 @@ values.
 If you want to add session authentication, also read [plugins/session/README.md](
 plugins/session/README.md). Otherwise, remove the relevant section of `config.php`.
 
-Open your ejabberd configuration (`/etc/ejabberd/ejabberd.cfg`) and set the
-external authentication script:
+Open your ejabberd configuration and set the external authentication script:
+
+### ejabberd < 13.10 ###
+
+The configuration file should be located at `/etc/ejabberd/ejabberd.cfg`. Find, uncomment
+and edit the following lines.
 
     {auth_method, external}.
     {extauth_program, ".../ejabberd-auth-php/main.php"}.
 
+### ejabberd 13.10+ ###
+
+The configuration file is at `/etc/ejabberd/ejabberd.yml`.
+
+    auth_method: external
+    extauth_program: ".../ejabberd-auth-php/main.php"
+    
 Extending
 ---------
 
