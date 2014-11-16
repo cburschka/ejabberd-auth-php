@@ -14,6 +14,7 @@ Currently implemented bridges:
 * Drupal 7.x
 * Drupal 8.x (unstable)
 * SMF 2.x
+* Apache htpasswd
 
 Potential candidates for further bridges are WordPress, MediaWiki, Joomla! and Moodle.
 
