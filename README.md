@@ -47,12 +47,12 @@ The configuration file is at `/etc/ejabberd/ejabberd.yml`.
 Extending
 ---------
 
-In order to create a new plugin named {xyz}, you will need the following:
+In order to create a new plugin named `{xyz}`, you will need the following:
 
-* A class extending EjabberdAuthBridge and implementing its methods.
-* A file named {xyz}.module that contains the function {xyz}_init().
+* A class extending `EjabberdAuthBridge` and implementing its methods.
+* A file named `{xyz}.module` that contains the function `{xyz}_init()`.
 
-{xyz}_init() will receive its appropriate conf array in config.php and must
+`{xyz}_init()` will receive its appropriate conf array in config.php and must
 return an instance of the extended class.
 
 The class methods must return boolean values indicating success or failure.
@@ -60,7 +60,7 @@ It is generally recommended NOT to allow account creation, account deletion or
 password changes, and instead to simply return FALSE in these methods.
 
 If you wish to use the `session` plugin with your bridge, you will also need to
-implement a function named {xyz}_session(). This function takes no arguments.
+implement a function named `{xyz}_session()`. This function takes no arguments.
 It is called in a non-CLI context, and should return the username of the
 currently logged-in user who made the web request, or `FALSE` if no user
 is logged in.
