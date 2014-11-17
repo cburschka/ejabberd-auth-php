@@ -47,14 +47,14 @@ function htpasswd_apr_md5($clear, $salt) {
   for($i = $len; $i > 0; $i >>= 1) {
     $text .= ($i & 1) ? chr(0) : $clear{0};
   }
-  $bin = pack("H32", md5($text));
+  $bin = pack('H32', md5($text));
 
   for($i = 0; $i < 1000; $i++) {
     $new = ($i & 1) ? $clear : $bin;
     if ($i % 3) $new .= $salt;
     if ($i % 7) $new .= $clear;
     $new .= ($i & 1) ? $bin : $clear;
-    $bin = pack("H32", md5($new));
+    $bin = pack('H32', md5($new));
   }
 
   $tmp = '';
