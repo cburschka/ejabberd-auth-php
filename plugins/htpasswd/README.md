@@ -22,7 +22,7 @@ Installation
 
 This configuration must be entered into plugin_conf in config.php:
 
-  'plugin_conf' => [
-    'htpasswd_file' => '</path/to/htpasswd/file>',
-    'plain' => FALSE, // optional
-  ]
+    'plugin_conf' => [
+      'htpasswd_file' => '</path/to/htpasswd/file>',
+      'plain' => FALSE, // optional
+    ]
