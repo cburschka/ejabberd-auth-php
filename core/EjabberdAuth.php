@@ -63,6 +63,7 @@ class EjabberdAuth {
   function execute($data) {
     $args = explode(':', $data . ':::');
     list($command, $username, $server, $password) = $args;
+    $username = xmpp_unescape_node($username);
 
     // Don't log the password, obviously.
     $this->log("Executing $command on {$username}@{$server}");
@@ -83,4 +84,11 @@ class EjabberdAuth {
         $this->stop();
     }
   }
+}
+
+function xmpp_unescape_node($string) {
+  return str_replace(
+    ['\\20', '\\22', '\\26', '\\27', '\\2f', '\\3a', '\\3c', '\\3e', '\\40', '\\5c'],
+    [' ',     '"',    '&',    '\'',   '/',    ':',    '<',    '>',    '@',    '\\'],
+    $string);
 }
