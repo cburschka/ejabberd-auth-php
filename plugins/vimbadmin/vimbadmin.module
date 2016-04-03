@@ -1,0 +1,11 @@
+<?php
+
+function vimbadmin_init($config) {
+  $data = array();
+  $file = $config['root_path'] . 'application/configs/application.ini';
+  $config = parse_ini_file($file);
+
+  // Load the plugin.
+  require_once __DIR__ . '/BridgeVimbadmin.php';
+  return new BridgeVimbadmin($config);
+}
