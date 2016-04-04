@@ -1,0 +1,20 @@
+<?php
+
+function wordpress_init($config) {
+  require_once $config['root_path'] . 'wp-load.php';
+  require_once $config['root_path'] . 'wp-includes/user.php';
+  ob_end_clean(); // Basically voodoo.
+
+  // Load the plugin.
+  require_once __DIR__ . '/BridgeWordpress.php';
+  return new BridgeWordpress();
+}
+
+function wordpress_session($config) {
+  require_once $config['root_path'] . 'wp-load.php';
+  require_once $config['root_path'] . 'wp-includes/user.php';
+
+  $id = wp_validate_logged_in_cookie(NULL);
+  if ($id) return (new WP_User($id))->user_login;
+}
+
