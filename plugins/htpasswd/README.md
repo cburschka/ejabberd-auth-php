@@ -26,3 +26,12 @@ This configuration must be entered into plugin_conf in config.php:
       'htpasswd_file' => '</path/to/htpasswd/file>',
       'plain' => FALSE, // optional
     ]
+
+Each domain can use a separate file, as in:
+
+    'plugin_conf' => [
+      'htpasswd_file' => [
+        'example.com' => '<com.htpasswd>',
+        'example.org' => '<org.htpasswd>',
+      ]
+    ]
