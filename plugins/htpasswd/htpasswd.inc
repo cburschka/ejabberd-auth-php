@@ -30,7 +30,7 @@ function htpasswd_check($clear, $hash, $config) {
    $result = $clear;
   }
 
-  return hash_equals($result, $hash);
+  return function_exists('hash_equals') ? hash_equals($result, $hash) : $result === $hash;
 }
 
 /**
