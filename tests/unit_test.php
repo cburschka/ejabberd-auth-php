@@ -48,38 +48,38 @@ class UnitTest {
   }
 
   function TestUserGood() {
-    $this->assert(['isuser', $this->valid['user'], 'localhost'], TRUE, 'isuser with valid username');
+    $this->assert(['isuser', $this->valid['user'], $this->valid['domain']], TRUE, 'isuser with valid username');
   }
 
   function TestUserBad() {
-    $this->assert(['isuser', '123456789', 'localhost'], FALSE, 'isuser with bad username');
+    $this->assert(['isuser', '123456789', $this->valid['domain']], FALSE, 'isuser with bad username');
   }
 
   function TestAuthGood() {
-    $this->assert(['auth', $this->valid['user'], 'localhost', $this->valid['password']], TRUE, 'auth with valid password');
+    $this->assert(['auth', $this->valid['user'], $this->valid['domain'], $this->valid['password']], TRUE, 'auth with valid password');
   }
 
   function TestAuthBadUser() {
-    $this->assert(['auth', '123456789', 'localhost', '123456789'], FALSE, 'auth with bad username');
+    $this->assert(['auth', '123456789', $this->valid['domain'], '123456789'], FALSE, 'auth with bad username');
   }
 
   function TestAuthBadPass() {
-    $this->assert(['auth', $this->valid['user'], 'localhost', '123456789'], FALSE, 'auth with bad password');
+    $this->assert(['auth', $this->valid['user'], $this->valid['domain'], '123456789'], FALSE, 'auth with bad password');
   }
   
   function TestSetPass() {
-    $this->assert(['setpass', '123456789', 'localhost', '123456789'], FALSE, 'attempt to set password (fail)');
+    $this->assert(['setpass', '123456789', $this->valid['domain'], '123456789'], FALSE, 'attempt to set password (fail)');
   }
 
   function TestRegister() {
-    $this->assert(['tryregister', '123456789', 'localhost', '123456789'], FALSE, 'attempt to create account (fail)');
+    $this->assert(['tryregister', '123456789', $this->valid['domain'], '123456789'], FALSE, 'attempt to create account (fail)');
   }
 
   function TestRemove() {
-    $this->assert(['removeuser', '123456789', 'localhost', '123456789'], FALSE, 'attempt to delete account (fail)');
+    $this->assert(['removeuser', '123456789', $this->valid['domain'], '123456789'], FALSE, 'attempt to delete account (fail)');
   }
 
   function TestRemove3() {
-    $this->assert(['removeuser3', '123456789', 'localhost', '123456789'], FALSE, 'attempt to login and delete account (fail)');
+    $this->assert(['removeuser3', '123456789', $this->valid['domain'], '123456789'], FALSE, 'attempt to login and delete account (fail)');
   }
 }
