@@ -7,7 +7,7 @@ require_once SESS_ROOT . 'main.php';
 if (!empty($_POST['salt']) && strlen($_POST['salt']) >= 16) {
   $entry = create_key($_POST['salt']);
   if ($entry) {
-    header('Content-type: text/plain; charset=UTF-8');
+    header('Content-type: application/json');
     print json_encode($entry);
   }
   else {
