@@ -61,7 +61,7 @@ class EjabberdAuth {
   }
 
   function execute($data) {
-    $args = explode(':', $data . ':::');
+    $args = is_array($data) ? array_merge($data, [NULL,NULL,NULL]) : explode(':', $data . ':::');
     list($command, $username, $server, $password) = $args;
     $username = xmpp_unescape_node($username);
 
