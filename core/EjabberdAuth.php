@@ -37,18 +37,15 @@ class EjabberdAuth {
   }
 
   function read() {
-    $input = fread(STDIN, 2);
-    if (!$input) {
-      return $this->stop();
-    }
-
-    $input = unpack('n', $input);
-    $length = $input[1];
-    if($length > 0) {
-      $this->log("Reading $length bytes...");
-      $data = fread(STDIN, $length);
-      return $data;
-    }
+    $data = '';
+    do{
+        if (!$this->non_block_read(STDIN,$data)) {
+            if (strlen($data) > 0) {
+                   return  substr(trim($data),1);
+            }
+            else sleep (1);
+        }
+    }while(true);
   }
 
   function write($data) {
@@ -83,6 +80,21 @@ class EjabberdAuth {
       default:
         $this->stop();
     }
+  }
+  
+  function non_block_read($fd, &$data) {
+      $read = array($fd);
+      $write = array();
+      $except = array();
+      $result = stream_select($read, $write, $except, 0);
+      if($result === false) {
+            return $this->stop();
+      }
+      if($result === 0) {
+          return false;
+      }
+      $data.= stream_get_line($fd, 1);
+      return true;
   }
 }
 
