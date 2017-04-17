@@ -1,0 +1,18 @@
+<?php
+
+function gnusocial_init($config) {
+  define('INSTALLDIR', $config['root_path']);
+  define('EJABBERD', true);
+  define('GNUSOCIAL', true);
+  define('STATUSNET', true);  // compatibility
+
+  $server = $config['server'];
+  require_once $config['root_path'] . 'lib/common.php';
+  require_once $config['root_path'] . 'lib/util.php';
+
+  common_config_set('syslog', 'appname', 'ejabberd'); // too late for init...
+
+  // Load the plugin.
+  require_once __DIR__ . '/BridgeGnusocial.php';
+  return new BridgeGnusocial();
+}
