@@ -1,0 +1,12 @@
+<?php
+
+use \Drupal\user\UserInterface;
+
+/**
+ * Implements hook_user_login().
+ *
+ * @param \Drupal\user\UserInterface $account
+ */
+function ejabberd_auth_user_login(UserInterface $account) {
+  \Drupal::flood()->clear('ejabberd.failed_login_user', $account->getAccountName());
+}
