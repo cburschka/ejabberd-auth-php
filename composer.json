@@ -1,0 +1,20 @@
+{
+  "name": "ermarian/ejabberd-auth-php",
+  "description": "Bridging ejabberd with PHP authentication systems.",
+  "type": "library",
+  "license": "GPL2+",
+  "authors": [
+    {
+      "name": "Christoph Burschka",
+      "email": "christoph@burschka.de"
+    }
+  ],
+  "require": {
+    "php-curl-class/php-curl-class": "^7.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ermarian\\EAP\\": "src"
+    }
+  }
+}
