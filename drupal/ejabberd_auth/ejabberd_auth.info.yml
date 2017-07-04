@@ -1,5 +1,0 @@
-name: Ejabberd REST Authentication
-description: Provides a REST authentication endpoint that verifies a user's password.
-core: 8.x
-dependencies:
-  - user
