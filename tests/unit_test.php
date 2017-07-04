@@ -7,7 +7,7 @@ class UnitTest {
       1 => ['pipe', 'w'],  // stdout is a pipe that the child will write to
       2 => STDERR,         // forward stderr directly
     ];
-    $cmd = __DIR__ . '/../main.php';
+    $cmd = __DIR__ . '/../main';
     $this->_process = proc_open($cmd, $spec, $this->pipes);
     $this->_input = $this->pipes[0];
     $this->_output = $this->pipes[1];

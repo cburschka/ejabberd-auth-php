@@ -2,6 +2,8 @@
 
 namespace Ermarian\EAP;
 
+use Symfony\Component\Yaml\Yaml;
+
 /**
  * Runs constantly and takes requests from an input stream
  * as specified in the ejabberd auth protocol.
@@ -49,35 +51,57 @@ class EjabberdAuth {
     $this->log('Initialized.');
   }
 
-  public function create(array $config) {
+  public static function create(array $config) {
     $bridges = [];
     $routes = [];
-    foreach ((array) $config['bridges'] as $key => $config) {
-      $callable = [$config['class'], 'create'];
-      $parameters = $config['parameters'];
+    foreach ((array) $config['bridges'] as $key => $bridge) {
+      $callable = [$bridge['class'], 'create'];
+      $parameters = $bridge['parameters'];
       $bridges[$key] = $callable($parameters);
-      foreach ((array) $config['hosts'] as $pattern) {
+      foreach ((array) $bridge['hosts'] as $pattern) {
         $score   = ($pattern[0] !== '.')
                    + substr_count($pattern, '.')
                    - substr_count($pattern, '*');
-        $pattern = str_replace(['.', '*'], ['\.', '[a-z0-9-]*'], $pattern);
+        $regex = str_replace(['.', '*'], ['\.', '[a-z0-9-]*'], $pattern);
         if ($pattern[0] === '.') {
-          $pattern = '/^.*?' . substr($pattern, 1) . '$/';
+          $regex = '/^.*?' . substr($regex, 2) . '$/';
         }
         else {
-          $pattern = "/^$pattern$/";
+          $regex = "/^$regex$/";
         }
-        $routes[] = [$score, $pattern, $key];
+        $routes[] = [
+          'score' => $score,
+          'pattern' => $pattern,
+          'regex' => $regex,
+          'key' => $key
+        ];
       }
     }
     usort($routes, function ($a, $b) {
       return $b['score'] - $a['score'];
     });
+
     return new static(
       $bridges,
       $routes,
       $config['log_path']
     );
+  }
+
+  /**
+   * @param string $filename
+   *
+   * @return \Ermarian\EAP\EjabberdAuth
+   *
+   * @throws \InvalidArgumentException
+   * @throws \Symfony\Component\Yaml\Exception\ParseException
+   */
+  public static function createFromFile($filename) {
+    if (!is_file($filename)) {
+      throw new \InvalidArgumentException("Configuration file {$filename} does not exist.");
+    }
+    $config = Yaml::parse(file_get_contents($filename));
+    return static::create($config);
   }
 
   /**
@@ -98,8 +122,14 @@ class EjabberdAuth {
     $this->running = TRUE;
     while ($this->running && $data = $this->read()) {
       if ($data) {
-        $result = $this->execute($data);
-        $this->write((int)$result);
+        try {
+          $result = $this->execute($data);
+          $this->write((int)$result);
+        }
+        catch (\InvalidArgumentException $exception) {
+          $this->log($exception->getMessage());
+          $this->write(0);
+        }
       }
     }
     $this->log('Stopped');
@@ -150,6 +180,7 @@ class EjabberdAuth {
    * @param $data
    *
    * @return bool
+   * @throws \InvalidArgumentException
    */
   public function execute($data) {
     $args = is_array($data) ? array_merge($data, [NULL,NULL,NULL]) : explode(':', $data . ':::');
@@ -161,11 +192,9 @@ class EjabberdAuth {
 
     switch ($command) {
       case 'isuser':
-        return ($this->session && $this->session->isuser($username, $server)) ||
-               $this->getBridge($server)->isuser($username, $server);
+        return $this->getBridge($server)->isuser($username, $server);
       case 'auth':
-        return ($this->session && $this->session->auth($username, $server, $password)) ||
-               $this->getBridge($server)->auth($username, $server, $password);
+        return $this->getBridge($server)->auth($username, $server, $password);
       case 'setpass':
       case 'tryregister':
       case 'removeuser':
@@ -189,15 +218,15 @@ class EjabberdAuth {
     if (!isset($this->bridgeCache[$server])) {
       $result = FALSE;
       foreach ($this->routes as $route) {
-        if (preg_match($route['pattern'], $server)) {
+        if (preg_match($route['regex'], $server)) {
+          $this->log("Matched {$server} to {$route['pattern']} for {$route['key']}.");
           $result = $this->bridges[$route['key']];
           break;
         }
       }
       $this->bridgeCache[$server] = $result;
       if (!$result) {
-        $this->log("Unknown host $server");
-        throw new \InvalidArgumentException('Unknown host');
+        throw new \InvalidArgumentException("Unknown host '{$server}'");
       }
     }
 

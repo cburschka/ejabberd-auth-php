@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+
+define('ROOT', __DIR__ . '/');
+
+require_once ROOT . 'vendor/autoload.php';
+
+use Ermarian\EAP\EjabberdAuth;
+
+try {
+  EjabberdAuth::createFromFile(ROOT . 'config.yml')->run();
+}
+catch (\Exception $exception) {
+  file_put_contents('php://stderr', $exception->getMessage() . "\n");
+}

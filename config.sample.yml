@@ -1,0 +1,13 @@
+config:
+  log_path: ''
+  bridges:
+    default:
+      class: '\Ermarian\EAP\Plugin\HttpBridge'
+      parameters:
+        url: 'https://example.com/'
+      hosts:
+        - '*.example.com'
+        - 'example.*'
+        - 'example.com'
+        - '.com'
+        - '*'

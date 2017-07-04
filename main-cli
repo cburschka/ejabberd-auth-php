@@ -1,0 +1,31 @@
+#!/usr/bin/env php
+<?php
+
+define('ROOT', __DIR__ . '/');
+
+require_once ROOT . 'vendor/autoload.php';
+
+use Ermarian\EAP\EjabberdAuth;
+
+
+$args = $_SERVER['argv'];
+$command = array_shift($args);
+
+if ($args) {
+  try {
+    $result = EjabberdAuth::createFromFile(ROOT . 'config.yml')->execute($args);
+    print($result ? 'true' : 'false');
+    print("\n");
+    exit($result ? 0 : 1);
+  }
+  catch (\Exception $exception) {
+    file_put_contents('php://stderr', $exception->getMessage() . "\n");
+  }
+}
+else {
+  print(
+'Usage:
+   main-cli isuser <user> <server>
+   main-cli auth <user> <server> <password>
+');
+}

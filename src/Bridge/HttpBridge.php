@@ -31,7 +31,20 @@ class HttpBridge implements BridgeInterface {
    * @return static
    */
   public static function create(array $config) {
-    return new static($config['url']);
+    $url = $config['url'];
+    if ($endpoint = static::getEndpoint()) {
+      $url = rtrim($url, '/') . '/' . $endpoint;
+    }
+    return new static($url);
+  }
+
+  /**
+   * Return an optional endpoint
+   *
+   * @return string
+   */
+  protected static function getEndpoint() {
+    return '';
   }
 
   /**
@@ -51,7 +64,7 @@ class HttpBridge implements BridgeInterface {
       'user'    => $username,
       'domain'  => $server,
     ]);
-    return $response->result === TRUE;
+    return $response && $response->result === TRUE;
   }
 
   /**
