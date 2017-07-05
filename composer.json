@@ -1,5 +1,5 @@
 {
-  "name": "ermarian/ejabberd-auth-php",
+  "name": "ermarian/ejabberd-auth",
   "description": "Bridging ejabberd with PHP authentication systems.",
   "type": "library",
   "license": "MIT",
