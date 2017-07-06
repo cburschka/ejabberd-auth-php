@@ -11,6 +11,11 @@ class HttpBridge implements BridgeInterface {
   /**
    * @var string
    */
+  protected static $endpoint = '';
+
+  /**
+   * @var string
+   */
   protected $url;
 
   /**
@@ -32,19 +37,10 @@ class HttpBridge implements BridgeInterface {
    */
   public static function create(array $config) {
     $url = $config['url'];
-    if ($endpoint = static::getEndpoint()) {
+    if ($endpoint = static::$endpoint) {
       $url = rtrim($url, '/') . '/' . $endpoint;
     }
     return new static($url);
-  }
-
-  /**
-   * Return an optional endpoint
-   *
-   * @return string
-   */
-  protected static function getEndpoint() {
-    return '';
   }
 
   /**

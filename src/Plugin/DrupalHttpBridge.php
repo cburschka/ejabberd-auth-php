@@ -9,8 +9,6 @@ class DrupalHttpBridge extends HttpBridge {
   /**
    * {@inheritdoc}
    */
-  public static function getEndpoint() {
-    return 'ejabberd/auth';
-  }
+  protected static $endpoint = 'ejabberd-auth';
 
 }
