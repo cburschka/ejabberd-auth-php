@@ -1,6 +1,6 @@
 <?php
 
-namespace Ermarian\EAP;
+namespace Ermarian\EjabberdAuth;
 
 /**
  * Must be implemented by every plugin.

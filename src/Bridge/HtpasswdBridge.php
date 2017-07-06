@@ -1,8 +1,8 @@
 <?php
 
-namespace Ermarian\EAP\Bridge;
+namespace Ermarian\EjabberdAuth\Bridge;
 
-use Ermarian\EAP\BridgeInterface;
+use Ermarian\EjabberdAuth\BridgeInterface;
 
 /**
  * Htpasswd authentication.

@@ -1,10 +1,10 @@
 <?php
 
-namespace Ermarian\EAP\Bridge;
+namespace Ermarian\EjabberdAuth\Bridge;
 
 use Curl\Curl;
 
-use Ermarian\EAP\BridgeInterface;
+use Ermarian\EjabberdAuth\BridgeInterface;
 
 class HttpBridge implements BridgeInterface {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Ermarian\EAP;
+namespace Ermarian\EjabberdAuth;
 
 use Symfony\Component\Yaml\Yaml;
 
@@ -16,7 +16,7 @@ class EjabberdAuth {
   protected $running;
 
   /**
-   * @var \Ermarian\EAP\BridgeInterface[]
+   * @var \Ermarian\EjabberdAuth\BridgeInterface[]
    */
   protected $bridges;
 
@@ -26,7 +26,7 @@ class EjabberdAuth {
   protected $routes;
 
   /**
-   * @var \Ermarian\EAP\BridgeInterface[]
+   * @var \Ermarian\EjabberdAuth\BridgeInterface[]
    */
   protected $bridgeCache = [];
 
@@ -91,7 +91,7 @@ class EjabberdAuth {
   /**
    * @param string $filename
    *
-   * @return \Ermarian\EAP\EjabberdAuth
+   * @return \Ermarian\EjabberdAuth\EjabberdAuth
    *
    * @throws \InvalidArgumentException
    * @throws \Symfony\Component\Yaml\Exception\ParseException
@@ -185,7 +185,7 @@ class EjabberdAuth {
   public function execute($data) {
     $args = is_array($data) ? array_merge($data, [NULL,NULL,NULL]) : explode(':', $data . ':::');
     list($command, $username, $server, $password) = $args;
-    $username = static::xmpp_unescape_node($username);
+    $username = static::decodeJidNode($username);
 
     // Don't log the password, obviously.
     $this->log("Executing $command on {$username}@{$server}");
@@ -210,7 +210,7 @@ class EjabberdAuth {
    *
    * @param $server
    *
-   * @return \Ermarian\EAP\BridgeInterface
+   * @return \Ermarian\EjabberdAuth\BridgeInterface
    *
    * @throws \InvalidArgumentException
    */
@@ -233,7 +233,7 @@ class EjabberdAuth {
     return $this->bridgeCache[$server];
   }
 
-  public static function xmpp_unescape_node($string) {
+  public static function decodeJidNode($string) {
     return str_replace(
       ['\\20', '\\22', '\\26', '\\27', '\\2f', '\\3a', '\\3c', '\\3e', '\\40', '\\5c'],
       [' ',     '"',    '&',    '\'',   '/',    ':',    '<',    '>',    '@',    '\\'],

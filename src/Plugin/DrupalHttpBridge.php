@@ -1,8 +1,8 @@
 <?php
 
-namespace Ermarian\EAP\Plugin;
+namespace Ermarian\EjabberdAuth\Plugin;
 
-use Ermarian\EAP\Bridge\HttpBridge;
+use Ermarian\EjabberdAuth\Bridge\HttpBridge;
 
 class DrupalHttpBridge extends HttpBridge {
 
