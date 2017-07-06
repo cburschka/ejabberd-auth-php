@@ -33,10 +33,12 @@ class HtpasswdBridge implements BridgeInterface {
 
   /**
    * {@inheritdoc}
+   *
+   * @throws \InvalidArgumentException
    */
   public static function create(array $config) {
     $data = [];
-    $file = $config['file'];
+    $file = ROOT . $config['file'];
     if (file_exists($file) && is_readable($file)) {
       $lines = explode("\n", trim(file_get_contents($file)));
       foreach ($lines as $line) {
@@ -44,10 +46,13 @@ class HtpasswdBridge implements BridgeInterface {
         $data[$user] = $password;
       }
     }
+    else {
+      throw new \InvalidArgumentException("htpasswd file $file cannot be read.");
+    }
 
     return new static(
       $data,
-      $config['plain']
+      !empty($config['plain'])
     );
   }
 

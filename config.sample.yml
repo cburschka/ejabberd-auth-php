@@ -10,3 +10,10 @@ bridges:
       - 'example.com'
       - '.com'
       - '*'
+  htpasswd:
+    class: '\Ermarian\EjabberdAuth\Bridge\HtpasswdBridge'
+    parameters:
+      # Paths are relative to package root.
+      file: 'htpasswd.txt'
+    hosts:
+      - 'htpasswd.example.com'
