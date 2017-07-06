@@ -5,7 +5,7 @@ define('ROOT', __DIR__ . '/');
 
 require_once ROOT . 'vendor/autoload.php';
 
-use Ermarian\EAP\EjabberdAuth;
+use Ermarian\EjabberdAuth\EjabberdAuth;
 
 
 $args = $_SERVER['argv'];

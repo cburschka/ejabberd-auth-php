@@ -2,7 +2,7 @@ config:
   log_path: ''
   bridges:
     default:
-      class: '\Ermarian\EAP\Plugin\HttpBridge'
+      class: '\Ermarian\EjabberdAuth\Bridge\HttpBridge'
       parameters:
         url: 'https://example.com/'
       hosts:
