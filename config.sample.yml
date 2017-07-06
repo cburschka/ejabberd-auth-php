@@ -1,13 +1,12 @@
-config:
-  log_path: ''
-  bridges:
-    default:
-      class: '\Ermarian\EjabberdAuth\Bridge\HttpBridge'
-      parameters:
-        url: 'https://example.com/'
-      hosts:
-        - '*.example.com'
-        - 'example.*'
-        - 'example.com'
-        - '.com'
-        - '*'
+log_path: ''
+bridges:
+  default:
+    class: '\Ermarian\EjabberdAuth\Bridge\HttpBridge'
+    parameters:
+      url: 'https://example.com/'
+    hosts:
+      - '*.example.com'
+      - 'example.*'
+      - 'example.com'
+      - '.com'
+      - '*'
