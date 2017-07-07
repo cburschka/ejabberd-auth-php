@@ -20,6 +20,7 @@ if ($args) {
   }
   catch (\Exception $exception) {
     file_put_contents('php://stderr', $exception->getMessage() . "\n");
+    exit(1);
   }
 }
 else {
