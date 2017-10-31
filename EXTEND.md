@@ -75,7 +75,7 @@ bridges:
 
 ## Database
 
-The second method directly accesses the target system's database to check the credentials manually.
+The second method directly accesses the target system's database to check the credentials itself.
 
 This is a good solution if your target CMS has a fairly simple authentication mechanism, and its database
 server is exposed to the ejabberd server.
