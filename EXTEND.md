@@ -3,8 +3,6 @@
 There are currently two supported ways to bridge with a CMS: HTTP (via REST), and direct database access (via PDO).
 Alternatively, plugins may create an implementation from scratch, but these two base classes should cover most needs.
 
-- some phpbb plugin/module/extension (I don't know the phpBB contrib architecture at all, sadly) that accepts a `POST` request with a password and returns `HTTP 200` or `HTTP 403` depending on whether the password is right. Then the URL of that plugin can be set in the `config.yml`.
-
 ## REST
 
 The first solution requires a REST endpoint which supports a particular query format.
